@@ -11,8 +11,8 @@
 SMODS.Back{
 	key = "antimatterDeck",
 	pos = {x = 1, y = 0},
-	unlocked = true,
-	discovered = true,
+	unlocked = false,
+	discovered = false,
 	loc_txt = {
 		name = "Antimatter",
 		text ={
@@ -26,6 +26,11 @@ SMODS.Back{
 	trigger_effect = function(self, args)
 		if args.context == "eval" and G.GAME.last_blind and G.GAME.last_blind.boss then
 			G.jokers.config.card_limit = G.jokers.config.card_limit + 1
+		end
+	end,
+	check_for_unlock = function(self, args)
+		if args.type == "ante_up" and args.ante == 9 and #G.jokers.cards >= 8 then
+			unlock_card(self)
 		end
 	end
 }
