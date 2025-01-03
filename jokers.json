@@ -1,11 +1,11 @@
 {
-	"id": "zero",
+	"id": "zeros_jokers",
 	"name": "Zeros Jokers",
 	"author": [
 		"Zero"
 	],
 	"description": "An assortment of my jokers",
-	"prefix": "zero",
+	"prefix": "zeros_jokers",
 	"main_file": "Jokers.lua",
 	"badge_colour": "c7638f",
 	"dependencies": [
