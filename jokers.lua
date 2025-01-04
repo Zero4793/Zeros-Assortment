@@ -13,6 +13,10 @@ SMODS.Joker {
 		text = {
 			"{C:mult}+2{} Mult for each",
 			"remaining card in {C:attention}hand"
+		},
+		unlock = {
+			"Have {C:attention}10{} or less cards",
+			"remaining in {C:attention}hand"
 		}
 	},
 	rarity = 1,
@@ -26,6 +30,14 @@ SMODS.Joker {
 				message = localize { type = 'variable', key = 'a_mult', vars = { 2*#G.hand.cards } }
 			}
 		end
+	end,
+	unlocked = false,
+	discovered = false,
+	-- on play have 10 cards remaining in hand
+	check_for_unlock = function(self, args)
+		if args.type == 'hand' and #G.hand.cards > 9 then
+			unlock_card(self)
+		end
 	end
 }
 
@@ -37,6 +49,10 @@ SMODS.Joker {
 		text = {
 			"Every discarded card",
 			"is {C:attention}Destroyed!"
+		},
+		unlock = {
+			"Reduce your deck",
+			"to {C:attention}26{} cards"
 		}
 	},
 	rarity = 3,
@@ -49,6 +65,14 @@ SMODS.Joker {
 				remove = true,
 				card = context.other_card
 			}
+		end
+	end,
+	unlocked = false,
+	discovered = false,
+	-- on remove cards from deck if deck < 27
+	check_for_unlock = function(self, args)
+		if G.deck and G.deck.config.card_limit < 27 then
+			unlock_card(self)
 		end
 	end
 }
@@ -184,7 +208,6 @@ SMODS.Joker {
 	end
 }
 
-
 SMODS.Joker {
 	key = 'cheekyAndy',
 	loc_txt = {
@@ -212,7 +235,6 @@ SMODS.Joker {
 		G.hand:change_size(-card.ability.extra.hand_size)
 	end
 }
-
 
 SMODS.Joker {
 	key = 'primeTime',
@@ -242,7 +264,6 @@ SMODS.Joker {
 	end
 }
 
-
 SMODS.Joker {
 	key = 'perkeo2',
 	loc_txt = {
@@ -251,7 +272,7 @@ SMODS.Joker {
 			"Creates a {C:dark_edition}Negative{} copy of",
 			"{C:attention}1{} random {C:attention}joker{}",
 			"card in your possession",
-			"at the end of the {C:attention}shop",
+			"at the end of the {C:attention} shop",
 		}
 	},
 	-- Extra is empty, because it only happens once. If you wanted to copy multiple cards, you'd need to restructure the code and add a for loop or something.
@@ -284,7 +305,6 @@ SMODS.Joker {
 	end
 }
 
-
 SMODS.Joker {
 	key = 'evening',
 	loc_txt = {
@@ -315,214 +335,3 @@ SMODS.Joker {
 		end
 	end
 }
-
--- Bananas!
-SMODS.Joker {
-	key = 'gros_michel2',
-	loc_txt = {
-		name = 'Gros Michel 2',
-		text = {
-			"{C:mult}+#1#{} Mult",
-			"{C:green}#2# in #3#{} chance this",
-			"card is destroyed",
-			"at end of round"
-		}
-	},
-	-- This searches G.GAME.pool_flags to see if Gros Michel went extinct. If so, no longer shows up in the shop.
-	no_pool_flag = 'gros_michel_extinct2',
-	config = { extra = { mult = 15, odds = 6 } },
-	rarity = 1,
-	atlas = 'ModdedVanilla',
-	pos = { x = 2, y = 1 },
-	cost = 5,
-	-- Gros Michel is incompatible with the eternal sticker, so this makes sure it can't be eternal.
-	eternal_compat = false,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.mult, (G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
-	end,
-	calculate = function(self, card, context)
-		if context.joker_main then
-			return {
-				mult_mod = card.ability.extra.mult,
-				message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
-			}
-		end
-		
-		-- Checks to see if it's end of round, and if context.game_over is false.
-		-- Also, not context.repetition ensures it doesn't get called during repetitions.
-		if context.end_of_round and not context.repetition and context.game_over == false and not context.blueprint then
-			-- Another pseudorandom thing, randomly generates a decimal between 0 and 1, so effectively a random percentage.
-			if pseudorandom('gros_michel2') < G.GAME.probabilities.normal / card.ability.extra.odds then
-				-- This part plays the animation.
-				G.E_MANAGER:add_event(Event({
-					func = function()
-						play_sound('tarot1')
-						card.T.r = -0.2
-						card:juice_up(0.3, 0.4)
-						card.states.drag.is = true
-						card.children.center.pinch.x = true
-						-- This part destroys the card.
-						G.E_MANAGER:add_event(Event({
-							trigger = 'after',
-							delay = 0.3,
-							blockable = false,
-							func = function()
-								G.jokers:remove_card(card)
-								card:remove()
-								card = nil
-								return true;
-							end
-						}))
-						return true
-					end
-				}))
-				-- Sets the pool flag to true, meaning Gros Michel 2 doesn't spawn, and Cavendish 2 does.
-				G.GAME.pool_flags.gros_michel_extinct2 = true
-				return {
-					message = 'Extinct!'
-				}
-			else
-				return {
-					message = 'Safe!'
-				}
-			end
-		end
-	end
-}
-SMODS.Joker {
-	key = 'cavendish2',
-	loc_txt = {
-		name = 'Cavendish 2',
-		text = {
-			"{X:mult,C:white} X#1# {} Mult",
-			"{C:green}#2# in #3#{} chance this",
-			"card is destroyed",
-			"at end of round"
-		}
-	},
-	-- This also searches G.GAME.pool_flags to see if Gros Michel went extinct. If so, enables the ability to show up in shop.
-	yes_pool_flag = 'gros_michel_extinct2',
-	config = { extra = { Xmult = 3, odds = 1000 } },
-	rarity = 1,
-	atlas = 'ModdedVanilla',
-	pos = { x = 3, y = 1 },
-	cost = 4,
-	eternal_compat = false,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.Xmult, (G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
-	end,
-	calculate = function(self, card, context)
-		if context.joker_main then
-			return {
-				message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
-				Xmult_mod = card.ability.extra.Xmult
-			}
-		end
-		if context.end_of_round and context.game_over == false and not context.repetition and not context.blueprint then
-			if pseudorandom('cavendish2') < G.GAME.probabilities.normal / card.ability.extra.odds then
-				G.E_MANAGER:add_event(Event({
-					func = function()
-						play_sound('tarot1')
-						card.T.r = -0.2
-						card:juice_up(0.3, 0.4)
-						card.states.drag.is = true
-						card.children.center.pinch.x = true
-						G.E_MANAGER:add_event(Event({
-							trigger = 'after',
-							delay = 0.3,
-							blockable = false,
-							func = function()
-								G.jokers:remove_card(card)
-								card:remove()
-								card = nil
-								return true;
-							end
-						}))
-						return true
-					end
-				}))
-				return {
-					message = 'Extinct!'
-				}
-			else
-				return {
-					message = 'Safe!'
-				}
-			end
-		end
-	end
-}
-
--- Castle
-SMODS.Joker {
-	key = 'castle2',
-	loc_txt = {
-		name = 'Castle 2',
-		text = {
-			"This Joker gains {C:chips}+#1#{} Chips",
-			"per discarded {V:1}#2#{} card,",
-			"suit changes every round",
-			"{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
-		}
-	},
-	blueprint_compat = true,
-	perishable_compat = false,
-	eternal_compat = true,
-	rarity = 2,
-	cost = 6,
-	config = { extra = { chips = 0, chip_mod = 3 }},
-	atlas = 'ModdedVanilla',
-	pos = { x = 5, y = 0 },
-	loc_vars = function(self, info_queue, card)
-		return { vars = { 
-			card.ability.extra.chip_mod, 
-			localize(G.GAME.current_round.castle2_card.suit, 'suits_singular'), -- gets the localized name of the suit 
-			card.ability.extra.chips,
-			colours = {G.C.SUITS[G.GAME.current_round.castle2_card.suit]} -- sets the colour of the text affected by `{V:1}`
-		}}
-	end,
-	calculate = function(self, card, context)
-		if 
-		context.discard and 
-		not context.other_card.debuff and 
-		context.other_card:is_suit(G.GAME.current_round.castle2_card.suit) and 
-		not context.blueprint
-		then
-			card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-			return {
-				message = localize('k_upgrade_ex'),
-				colour = G.C.CHIPS,
-				card = card
-			}
-		end
-		if context.joker_main and card.ability.extra.chips > 0 then
-			return {
-				message = localize{type='variable',key='a_chips',vars={card.ability.extra.chips}},
-				chip_mod = card.ability.extra.chips, 
-				colour = G.C.CHIPS
-			}
-		end
-	end
-}
-
-local igo = Game.init_game_object
-function Game:init_game_object()
-	local ret = igo(self)
-	ret.current_round.castle2_card = { suit = 'Spades' } 
-	return ret
-end
-
-function SMODS.current_mod.reset_game_globals(run_start)
-	-- The suit changes every round, so we use reset_game_globals to choose a suit.
-	G.GAME.current_round.castle2_card = { suit = 'Spades' }
-	local valid_castle_cards = {}
-	for _, v in ipairs(G.playing_cards) do
-		if not SMODS.has_no_suit(v) then -- Abstracted enhancement check for jokers being able to give cards additional enhancements
-			valid_castle_cards[#valid_castle_cards+1] = v
-		end
-	end
-	if valid_castle_cards[1] then 
-		local castle_card = pseudorandom_element(valid_castle_cards, pseudoseed('2cas'..G.GAME.round_resets.ante))
-		G.GAME.current_round.castle2_card.suit = castle_card.base.suit
-	end
-end
