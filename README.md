@@ -13,6 +13,18 @@ Dumpster Fire
 One Mans Trash
 	Gain $1 per remaining discard
 	Unlock: Finish a run with no unused discards
+
+# Doing
+Evening
+	retriggers even cards
+	some additional condition or cost? this is strong
+Perkeo2?
+	make negative copy of a joker when defeat boss
+primetime
+	some bonus to prime cards
+leaper
+	+1 mult. this doubles per straight flush played
+
 # TODO
 ## Decks
 54 card deck
@@ -87,6 +99,8 @@ Quest giver
 stonks?
 	each ? gain 1 mult
 	each ? gain #mult chips
+Dawn
+	some counterpart to dusk
 ## Consumables
 Execution Tag/Pack
 	gives combination of death and hangman tarots
