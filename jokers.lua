@@ -78,6 +78,34 @@ SMODS.Joker {
 }
 
 
+SMODS.Joker {
+	key = 'oneMansTrash',
+	loc_txt = {
+		name = 'One Man\'s Trash',
+		text = {
+			"At the end of each round",
+			"{C:money}$1{} per remaining {C:red}discard"
+		}
+	},
+	rarity = 2,
+	atlas = 'ModdedVanilla',
+	pos = {x=2,y=0},
+	cost=3,
+	calc_dollar_bonus = function(self, card)
+		return G.GAME.current_round.discards_left
+	end,
+	unlocked = false,
+	discovered = false,
+	check_for_unlock = function(self, args)
+		if args.type == "ante_up" and args.ante == 9 and G.GAME.unused_discards == 0 then
+			unlock_card(self)
+		end
+	end
+	-- want to change from cacl_dollar_bonus to alter money_per_discard
+	-- add_to_deck = function(self, card, from_debuff)
+	-- remove_from_deck = function(self, card, from_debuff)
+}
+
 -- example jokers below
 
 SMODS.Joker {
