@@ -5,7 +5,6 @@ SMODS.Atlas {
 	py = 95
 }
 
-
 SMODS.Joker {
 	key = 'redJoker',
 	loc_txt = {
@@ -40,7 +39,6 @@ SMODS.Joker {
 		end
 	end
 }
-
 
 SMODS.Joker {
 	key = 'dumpsterFire',
@@ -77,7 +75,6 @@ SMODS.Joker {
 	end
 }
 
-
 SMODS.Joker {
 	key = 'oneMansTrash',
 	loc_txt = {
@@ -85,6 +82,9 @@ SMODS.Joker {
 		text = {
 			"At the end of each round",
 			"{C:money}$1{} per remaining {C:red}discard"
+		},
+		unlock = {
+			"Finish a run with {C:attention}no unused discards"
 		}
 	},
 	rarity = 2,
@@ -104,74 +104,6 @@ SMODS.Joker {
 	-- want to change from cacl_dollar_bonus to alter money_per_discard
 	-- add_to_deck = function(self, card, from_debuff)
 	-- remove_from_deck = function(self, card, from_debuff)
-}
-
--- example jokers below
-
-SMODS.Joker {
-	key = 'joker+',
-	loc_txt = {
-		name = 'Joker Plus',
-		text = {
-			"{C:mult}+#1# {} Mult"
-		}
-	},
-	config = { extra = { mult = 6} },
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.mult} }
-	end,
-	rarity = 2,
-	atlas = 'ModdedVanilla',
-	pos = { x = 0, y = 0 },
-	cost = 3,
-	calculate = function(self, card, context)
-		if context.joker_main then
-			return {
-				mult_mod = card.ability.extra.mult,
-				message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
-			}
-		end
-	end
-}
-
-SMODS.Joker {
-	key = 'sprinter',
-	loc_txt = {
-		name = 'Sprinter',
-		text = {
-			"Gains {C:chips}+#2#{} Chips",
-			"if played hand",
-			"contains a {C:attention}Straight{}",
-			"{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
-		}
-	},
-	config = { extra = { chips = 0, chip_gain = 15 } },
-	rarity = 2,
-	atlas = 'ModdedVanilla',
-	pos = { x = 1, y = 0 },
-	cost = 6,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.chips, card.ability.extra.chip_gain } }
-	end,
-	calculate = function(self, card, context)
-		if context.joker_main then
-			return {
-				chip_mod = card.ability.extra.chips,
-				message = localize { type = 'variable', key = 'a_chips', vars = { card.ability.extra.chips } }
-			}
-		end
-		if context.before and next(context.poker_hands['Straight']) then
-			card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_gain
-			return {
-				message = 'Upgraded!',
-				colour = G.C.CHIPS,
-				-- The return value, "card", is set to the variable "card", which is the joker.
-				-- Basically, this tells the return value what it's affecting, which if it's the joker itself, it's usually card.
-				-- It can be things like card = context.other_card in some cases, so specifying card (return value) = card (variable from function) is required.
-				card = card
-			}
-		end
-	end
 }
 
 SMODS.Joker {
@@ -209,31 +141,7 @@ SMODS.Joker {
 			}
 		end
 	end
-}
-
-SMODS.Joker {
-	key = 'golden2',
-	loc_txt = {
-		name = 'Golden Joker 2',
-		text = {
-			"Earn {C:money}$#1#{} at",
-			"end of round.",
-			"Increases by {C:money}$#2#{}"
-		}
-	},
-	config = { extra = { money = 1, money_gain = 1 } },
-	rarity = 1,
-	atlas = 'ModdedVanilla',
-	pos = { x = 2, y = 0 },
-	cost = 6,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.money, card.ability.extra.money_gain } }
-	end,
-	calc_dollar_bonus = function(self, card)
-		local bonus = card.ability.extra.money
-		card.ability.extra.money = card.ability.extra.money + card.ability.extra.money_gain
-		return bonus
-	end
+	-- add an unlock
 }
 
 SMODS.Joker {
