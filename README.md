@@ -13,6 +13,9 @@ Dumpster Fire
 One Mans Trash
 	Gain $1 per remaining discard
 	Unlock: Finish a run with no unused discards
+Noble Joker
+	Gain 1 mult per 2 face cards in full deck
+	*Unlock: Have 24 face cards in your deck
 
 # Doing
 Evening
@@ -30,6 +33,7 @@ leaper
 54 card deck
 	standard deck plus 2 joker cards
 	> play a hand of all wild cards
+	* look at bunco mosaic unlock
 Pick or Perish
 	shop pool is altered by purchases
 	options shown are removed from pool, they are added back upon purchase
@@ -101,6 +105,8 @@ stonks?
 	each ? gain #mult chips
 Dawn
 	some counterpart to dusk
+population bonus?
+	+1 mult per face card in full deck
 ## Consumables
 Execution Tag/Pack
 	gives combination of death and hangman tarots

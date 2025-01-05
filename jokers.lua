@@ -107,6 +107,56 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+	key = 'noble',
+	loc_txt = {
+		name = 'Noble Joker',
+		text = {
+			"{C:mult}+1{} Mult per 2",
+			"{C:attention}face{} cards in your full deck"
+		},
+		unlock = {
+			"Have {C:attention}24{} or more face cards",
+			"in your full deck"
+		}
+	},
+	rarity = 1,
+	atlas = 'ModdedVanilla',
+	pos = { x = 4, y = 0 },
+	cost = 4,
+	calculate = function(self, card, context)
+		if context.joker_main then
+			local face_count = 0
+			for _, card in pairs(G.playing_cards) do
+				if card:is_face() and not card.debuff then
+					face_count = face_count + 1
+				end
+			end
+			face_count = math.floor(face_count / 2)
+			return {
+				mult_mod = face_count,
+				message = localize { type = 'variable', key = 'a_mult', vars = { face_count } }
+			}
+		end
+	end,
+	unlocked = false,
+	discovered = false,
+	-- reach 24 face cards in deck
+	check_for_unlock = function(self, args)
+		if G.deck and G.deck.config.card_limit > 23 then
+			local face_count = 0
+			for _, card in pairs(G.playing_cards) do
+				if card:is_face() and not card.debuff then
+					face_count = face_count + 1
+				end
+			end
+			if face_count > 23 then
+				unlock_card(self)
+			end
+		end
+	end
+}
+
+SMODS.Joker {
 	key = 'leaper',
 	loc_txt = {
 		name = 'Leaper',
