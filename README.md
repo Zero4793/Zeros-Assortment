@@ -15,7 +15,7 @@ One Mans Trash
 	Unlock: Finish a run with no unused discards
 Noble Joker
 	Gain 1 mult per 2 face cards in full deck
-	*Unlock: Have 24 face cards in your deck
+	Unlock: Have 24 face cards in your deck
 
 # Doing
 Evening
