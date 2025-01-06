@@ -8,6 +8,8 @@ SMODS.Atlas {
 -- Red Joker
 SMODS.Joker {
 	key = 'redJoker',
+	atlas = 'ModdedVanilla',
+	pos = { x = 5, y = 1 },
 	loc_txt = {
 		name = 'Red Joker',
 		text = {
@@ -20,8 +22,6 @@ SMODS.Joker {
 		}
 	},
 	rarity = 1,
-	atlas = 'ModdedVanilla',
-	pos = { x = 5, y = 1 },
 	cost = 2,
 	calculate = function(self, card, context)
 		if context.joker_main then
@@ -44,6 +44,8 @@ SMODS.Joker {
 -- Dumpster Fire
 SMODS.Joker {
 	key = 'dumpsterFire',
+	atlas = 'ModdedVanilla',
+	pos = {x=5,y=1},
 	loc_txt = {
 		name = 'Dumpster Fire',
 		text = {
@@ -56,9 +58,7 @@ SMODS.Joker {
 		}
 	},
 	rarity = 3,
-	atlas = 'ModdedVanilla',
-	pos = {x=5,y=1},
-	cost=6,
+	cost=8,
 	calculate = function(self,card,context)
 		if context.discard and not context.blueprint then
 			return {
@@ -80,6 +80,8 @@ SMODS.Joker {
 -- One Man's Trash
 SMODS.Joker {
 	key = 'oneMansTrash',
+	atlas = 'ModdedVanilla',
+	pos = {x=2,y=0},
 	loc_txt = {
 		name = 'One Man\'s Trash',
 		text = {
@@ -90,10 +92,8 @@ SMODS.Joker {
 			"Finish a run with {C:attention}no unused {C:red}discards"
 		}
 	},
-	rarity = 2,
-	atlas = 'ModdedVanilla',
-	pos = {x=2,y=0},
-	cost=3,
+	rarity = 1,
+	cost = 4,
 	calc_dollar_bonus = function(self, card)
 		return G.GAME.current_round.discards_left
 	end,
@@ -113,6 +113,8 @@ SMODS.Joker {
 -- Noble
 SMODS.Joker {
 	key = 'noble',
+	atlas = 'ModdedVanilla',
+	pos = { x = 4, y = 0 },
 	loc_txt = {
 		name = 'Noble Joker',
 		text = {
@@ -125,9 +127,7 @@ SMODS.Joker {
 		}
 	},
 	rarity = 1,
-	atlas = 'ModdedVanilla',
-	pos = { x = 4, y = 0 },
-	cost = 4,
+	cost = 2,
 	calculate = function(self, card, context)
 		if context.joker_main then
 			local face_count = 0
@@ -164,6 +164,8 @@ SMODS.Joker {
 -- Leaper
 SMODS.Joker {
 	key = 'leaper',
+	atlas = 'ModdedVanilla',
+	pos = { x = 1, y = 0 },
 	loc_txt = {
 		name = 'Leaper',
 		text = {
@@ -173,11 +175,9 @@ SMODS.Joker {
 			"{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
 		}
 	},
-	config = { extra = { mult = 1, mult_gain = 2 } },
 	rarity = 3,
-	atlas = 'ModdedVanilla',
-	pos = { x = 1, y = 0 },
 	cost = 8,
+	config = { extra = { mult = 1, mult_gain = 2 } },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult, card.ability.extra.mult_gain } }
 	end,
@@ -203,6 +203,8 @@ SMODS.Joker {
 -- Prime Time
 SMODS.Joker {
 	key = 'primeTime',
+	atlas = 'ModdedVanilla',
+	pos = { x = 4, y = 0 },
 	loc_txt = {
 		name = 'Prime Time',
 		text = {
@@ -213,10 +215,8 @@ SMODS.Joker {
 			"Play a hand of {C:blue}5{} {C:attention}7's{}"
 		}
 	},
-	rarity = 2,
-	atlas = 'ModdedVanilla',
-	pos = { x = 4, y = 0 },
-	cost = 6,
+	rarity = 1,
+	cost = 4,
 	calculate = function(self, card, context)
 		if context.cardarea == G.play then
 			local prime = {[14] = true,[2] = true,[3] = true,[5] = true,[7] = true}
@@ -248,6 +248,9 @@ SMODS.Joker {
 -- Perke no
 SMODS.Joker {
 	key = 'perkeno',
+	atlas = 'ModdedVanilla',
+	pos = { x = 0, y = 1 },
+	soul_pos = { x = 4, y = 1 },
 	loc_txt = {
 		name = 'Perke No',
 		text = {
@@ -257,9 +260,6 @@ SMODS.Joker {
 		}
 	},
 	rarity = 4,
-	atlas = 'ModdedVanilla',
-	pos = { x = 0, y = 1 },
-	soul_pos = { x = 4, y = 1 },
 	cost = 20,
 	calculate = function(self, card, context)
 		if context.blind and context.blind.boss then

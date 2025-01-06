@@ -1,11 +1,11 @@
-# Done
+# Completed!
 ## Decks
 Antimatter
 	Start with 1 Joker slot, Gain 1 per Ante
 	Unlock: Finish a run with 8+ Jokers
 Headstart deck
 	$25 jumbo buffon pack, start ante 2
-	Unlock: Skip 8 by Ante 8
+	Unlock: Skip 8 blinds by Ante 8
 ## Jokers
 Red Joker
 	Gain 2 mult per remaining card in hand
@@ -22,11 +22,12 @@ Noble Joker
 Prime Time
 	Prime cards give their rank as mult
 	Unlock: Play a hand of 5 7's
-Perkeo2?
+Perkeno
 	Make a negative copy of a random joker when entering boss
 	Unlock: None/Legendary
 Leaper
 	+1 mult. this doubles per straight flush played
+	Unlock: ?
 
 # TODO
 ## Decks
@@ -132,9 +133,6 @@ stonks?
 	each ? gain #mult chips
 Dawn
 	some counterpart to dusk
-4-leaf clover
-	cards scored in 4 of a kind become lucky
-	also make into clubs?
 Plasma/Sun Joker. maybe Ra(sun god)?
 	the plasma deck effect. legendary
 sirius/northstar/other astro theme / otherwordly
@@ -201,8 +199,6 @@ gunpowder
 name?
 	gives mult of its rank instead of chips
 ## Misc
-Joker fusion, some method of combining related jokers into new ones, perhaps if have each of a set unlock the fusion in shop or straight add it to next shop
-	shortcut & 4 fingers?
 Limitless Endless mode; once you reach endless, limits are removed. joker slots/money gain/etc. a reward for winning. either setting that alters endless, or another option on win screen
 Equinox & Solstice does what?
 Vampire Blind
@@ -218,9 +214,50 @@ freeze/lock items in shop, that you cant buy yet
 shredder, pay to delete cards from deck
 better rerolls, rerolls voucher and packs too
 voucher packs?
-asteroids/comets/moons
-	like planet cards but 'contains' and for specific hand patterns. adds onto base hand score before card score phase
-	one of jupiters moons could be lesser flush, eg at least 4 cards of same suit
+
+Moons
+	bonuses for sub-hand-types that add onto base.
+	eg Luna lvls up Full Moon, which is a sub-type of Full House (the pair is mono suit, as is the 3 pair, but diff from each other, not flush house)
+	when you play a Full Moon, it adds the Earth/Full-House base mult and chips, then also adds Luna/Full-Moon on top.
+	moons are unlocked in shop when you buy their base planet. so your not flooded with many unwanted moons
+	they would be smaller scale bonus, like 1-4mult and 5-20 chips probs
+	Mars
+		Phobos = Flower Four = each of different suit | start weaker, scale better
+		Deimos = Flush Four = mono suit | start stronger, scale less
+	Jupiter
+		Ganymede = club? 
+		Callisto =  spade?
+		Io =  diamond?
+		Europa = heart?
+	Saturn
+		Titan
+		Rhea
+		Lapetus
+		Dione
+		Tethys
+	Uranus
+	Neptune
 
 more meta upgrades, not just unlock jokers/decks, but also consumables and types, and shop features etc (like freeze instead of being voucher or option)
 	basically start with only normal cards and jokers, gotta unlock tarots/spectrals/planets, special features,etc
+
+Joker fusion, some method of combining related jokers into new ones, perhaps if have each of a set unlock the fusion in shop or straight add it to next shop
+	shortcut & 4 fingers?
+Fusion mod/apli exists already, use it!
+we already have an API for this mod. This mod and its fusion systems are complete; fusionjokers
+use elbe's fork of the mod
+probably want to use tsumani or fusion force as examples of using the api. you don't want to get too bogged down into the base mod's code that you don't actually need to worry about
+it's very very simple though i'll just run through the basics of it right now
+when you make a joker you do everything the same as a regular joker except the rarity is "Fusion"
+keep the "" around the word
+and then on any line after the joker is defined in your code, you register it as a fusion with the following line of code
+FusionJokers.fusions:add_fusion("material-joker-key-1", <material 1 carry_stat (string)>, <extra_stat (boolean)>, "material-joker-key-2", <material 2 carry_stat (string)>, <extra_stat (boolean)>, "j_modprefix_<key of resulting fusion joker>", <fusioncost (integer)>)
+looks a bit complicated at face value
+you put the keys of the jokers you wanna fuse in the material joker key sections
+the carry_stat is where you put a string which has the name of the value you want to carry to the new joker
+e.g if you wanted to carry the scaled mult from spare trousers, you'd write "mult" there
+and it will carry the card.ability.mult value from trousers over to the card.ability.mult value of the fusion
+if extra_stat is set to true, it will go to card.ability.extra.mult instead
+you can carry stats from both jokers, or neither, or just one
+the fusion cost is how many $ you spend to fuse the joker
+probably a good idea to look at the fusions from the base mod, tsunami, fusion force, and vultbines to make sure you aren't trying to duplicate a fusion
