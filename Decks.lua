@@ -8,6 +8,7 @@
 ----------------------------------------------
 ------------MOD CODE -------------------------
 
+-- start with 1 joker slot, gain 1 per ante
 SMODS.Back{
 	key = "antimatterDeck",
 	pos = {x = 1, y = 0},
@@ -18,7 +19,7 @@ SMODS.Back{
 			"Gain 1 per {C:attention}Ante."			
 		},
 		unlock = {
-			"Have 8 {C:attention}Jokers at run win"
+			"Have {C:attention}8 Jokers{} at run {C:attention}win"
 		}
 	},
 	apply = function()
@@ -38,6 +39,57 @@ SMODS.Back{
 		end
 	end
 }
+
+-- $25, jumbo buffoon pack, start ante 2
+SMODS.Back{
+	key = "Headstart",
+	pos = {x = 2, y = 0},
+	config = { dollars = 21	},
+	loc_txt = {
+		name = "Headstart",
+		text = {
+			"Start on {C:red}Ante 2",
+			"with {C:attention}$25{} and a",
+			"{C:blue}Jumbo Buffoon Pack"
+		},
+		unlock = {
+			"Skip {C:attention}6 Blinds{} by {C:attention}Ante 4"
+		}
+	},
+	apply = function()
+		-- ante = 2
+		ease_ante(1)
+		G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or 2
+		-- gain 1 jumbo buffoon pack
+		G.E_MANAGER:add_event(Event({
+			func = (function()
+				add_tag(Tag("tag_buffoon"))
+				return true
+			end)
+		}))
+	end,
+	unlocked = false,
+	discovered = false,
+	-- skip to ante 4
+	check_for_unlock = function(self, args)
+		if args.type == "ante_up" and args.ante == 4 and G.GAME.skips >= 6 then
+			unlock_card(self)
+		end
+		-- if args.type == "ante_up" then
+		-- 	print(args.ante)
+		-- 	print(G.GAME.skips)
+		-- 	-- print(args.skips_total)
+		-- end
+		-- if args.type == "blind_skipped" then
+		-- 	-- print(args.ante)
+		-- 	print(G.GAME.skips)
+		-- 	print(args.skips_total)
+		-- end
+	end
+}
+--G.GAME.skips = local/run
+--args.skips_total = global/profile
+
 
 ----------------------------------------------
 ------------MOD CODE END----------------------

@@ -5,6 +5,7 @@ SMODS.Atlas {
 	py = 95
 }
 
+-- Red Joker
 SMODS.Joker {
 	key = 'redJoker',
 	loc_txt = {
@@ -14,7 +15,7 @@ SMODS.Joker {
 			"remaining card in {C:attention}hand"
 		},
 		unlock = {
-			"Have {C:attention}10{} or less cards",
+			"Have {C:attention}10{} or more cards",
 			"remaining in {C:attention}hand"
 		}
 	},
@@ -40,6 +41,7 @@ SMODS.Joker {
 	end
 }
 
+-- Dumpster Fire
 SMODS.Joker {
 	key = 'dumpsterFire',
 	loc_txt = {
@@ -75,16 +77,17 @@ SMODS.Joker {
 	end
 }
 
+-- One Man's Trash
 SMODS.Joker {
 	key = 'oneMansTrash',
 	loc_txt = {
 		name = 'One Man\'s Trash',
 		text = {
 			"At the end of each round",
-			"{C:money}$1{} per remaining {C:red}discard"
+			"gain {C:money}$1{} per remaining {C:red}discard"
 		},
 		unlock = {
-			"Finish a run with {C:attention}no unused discards"
+			"Finish a run with {C:attention}no unused {C:red}discards"
 		}
 	},
 	rarity = 2,
@@ -96,6 +99,7 @@ SMODS.Joker {
 	end,
 	unlocked = false,
 	discovered = false,
+	-- finish a run with no unused discards
 	check_for_unlock = function(self, args)
 		if args.type == "ante_up" and args.ante == 9 and G.GAME.unused_discards == 0 then
 			unlock_card(self)
@@ -106,6 +110,7 @@ SMODS.Joker {
 	-- remove_from_deck = function(self, card, from_debuff)
 }
 
+-- Noble
 SMODS.Joker {
 	key = 'noble',
 	loc_txt = {
@@ -156,12 +161,13 @@ SMODS.Joker {
 	end
 }
 
+-- Leaper
 SMODS.Joker {
 	key = 'leaper',
 	loc_txt = {
 		name = 'Leaper',
 		text = {
-			"Gains {C:mult}x#2#{} Mult",
+			"{C:mult}Mult gain{} doubles",
 			"if played hand",
 			"contains a {C:attention}Straight Flush{}",
 			"{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
@@ -194,93 +200,74 @@ SMODS.Joker {
 	-- add an unlock
 }
 
-SMODS.Joker {
-	key = 'cheekyAndy',
-	loc_txt = {
-		name = 'Cheeky Andy',
-		text = {
-			"{C:red}#1#{} discards",
-			"each round,",
-			"{C:red}+#2#{} hand size"
-		}
-	},
-	config = { extra = { discard_size = -1, hand_size = 1 } },
-	rarity = 2,
-	atlas = 'ModdedVanilla',
-	pos = { x = 3, y = 0 },
-	cost = 7,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.discard_size, card.ability.extra.hand_size } }
-	end,
-	add_to_deck = function(self, card, from_debuff)
-		G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.discard_size
-		G.hand:change_size(card.ability.extra.hand_size)
-	end,
-	remove_from_deck = function(self, card, from_debuff)
-		G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.discard_size
-		G.hand:change_size(-card.ability.extra.hand_size)
-	end
-}
-
+-- Prime Time
 SMODS.Joker {
 	key = 'primeTime',
 	loc_txt = {
 		name = 'Prime Time',
 		text = {
-			"Retrigger all",
-			"played {C:attention}prime{} cards"
+			"{C:attention}Prime{} cards score",
+			"their rank as {C:mult}Mult"
+		},
+		unlock = {
+			"Play a hand of {C:blue}5{} {C:attention}7's{}"
 		}
 	},
-	config = { extra = { repetitions = 1 } },
 	rarity = 2,
 	atlas = 'ModdedVanilla',
 	pos = { x = 4, y = 0 },
 	cost = 6,
 	calculate = function(self, card, context)
-		if context.cardarea == G.play and context.repetition and not context.repetition_only then
+		if context.cardarea == G.play then
 			local prime = {[14] = true,[2] = true,[3] = true,[5] = true,[7] = true}
 			if prime[context.other_card:get_id()] then
+				local num = context.other_card:get_id()
+				if num == 14 then num = 1 end
 				return {
-					message = 'Again!',
-					repetitions = card.ability.extra.repetitions,
+					mult = num,
 					card = context.other_card
 				}
 			end
 		end
+	end,
+	unlocked = false,
+	discovered = false,
+	-- play a hand of 5 7's
+	check_for_unlock = function(self, args)
+		if args.type == 'hand' and #args.scoring_hand == 5 then -- or args.handname == 'Five of a Kind' or args.handname == 'Flush Five' then
+			for _, card in pairs(args.scoring_hand) do
+				if card:get_id() ~= 7 then
+					return false
+				end
+			end
+			unlock_card(self)
+		end
 	end
 }
 
+-- Perke no
 SMODS.Joker {
-	key = 'perkeo2',
+	key = 'perkeno',
 	loc_txt = {
-		name = 'Perkeo 2',
+		name = 'Perke No',
 		text = {
 			"Creates a {C:dark_edition}Negative{} copy of",
-			"{C:attention}1{} random {C:attention}joker{}",
-			"card in your possession",
-			"at the end of the {C:attention} shop",
+			"a random {C:attention}joker{} when",
+			"you enter {C:attention}Boss Blind"
 		}
 	},
-	-- Extra is empty, because it only happens once. If you wanted to copy multiple cards, you'd need to restructure the code and add a for loop or something.
-	config = { extra = {} },
 	rarity = 4,
 	atlas = 'ModdedVanilla',
 	pos = { x = 0, y = 1 },
 	soul_pos = { x = 4, y = 1 },
 	cost = 20,
 	calculate = function(self, card, context)
-		if context.ending_shop then
+		if context.blind and context.blind.boss then
 			G.E_MANAGER:add_event(Event({
 				func = function()
-					-- pseudorandom_element is a vanilla function that chooses a single random value from a table of values, which in this case, is your consumables.
-					-- pseudoseed('perkeo2') could be replaced with any text string at all - It's simply a way to make sure that it's affected by the game seed, because if you use math.random(), a base Lua function, then it'll generate things truly randomly, and can't be reproduced with the same Balatro seed. LocalThunk likes to have the joker names in the pseudoseed string, so you'll often find people do the same.
-					local card = copy_card(pseudorandom_element(G.jokers.cards, pseudoseed('perkeo2')), nil)
-					
-					-- Vanilla function, it's (edition, immediate, silent), so this is ({edition = 'e_negative'}, immediate = true, silent = nil)
+					local card = copy_card(pseudorandom_element(G.jokers.cards, pseudoseed('perkeno')), nil)
 					card:set_edition('e_negative', true)
 					card:add_to_deck()
-					-- card:emplace puts a card in a cardarea, this one is G.consumeables, but G.jokers works, and custom card areas could also work.
-					-- I think playing cards use "create_playing_card()" and are separate.
 					G.jokers:emplace(card)
 					return true
 				end
@@ -289,35 +276,5 @@ SMODS.Joker {
 			{ message = localize('k_duplicated_ex') })
 		end
 	end
-}
-
-SMODS.Joker {
-	key = 'evening',
-	loc_txt = {
-		name = 'Evening',
-		text = {
-			"Each played {C:attention}Even card{}",
-			"gives {C:chips}+#1#{} Chips and",
-			"{C:mult}+#2#{} Mult when scored"
-		}
-	},
-	config = { extra = { chips = 4, mult = 2 } },
-	rarity = 1,
-	atlas = 'ModdedVanilla',
-	pos = { x = 1, y = 1 },
-	cost = 4,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.chips, card.ability.extra.mult } }
-	end,
-	calculate = function(self, card, context)
-		if context.individual and context.cardarea == G.play then
-			if context.other_card:get_id()%2 == 0 then
-				return {
-					chips = card.ability.extra.chips,
-					mult = card.ability.extra.mult,
-					card = context.other_card
-				}
-			end
-		end
-	end
+	-- no unlock since legendary
 }

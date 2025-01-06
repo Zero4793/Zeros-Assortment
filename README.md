@@ -3,6 +3,9 @@
 Antimatter
 	Start with 1 Joker slot, Gain 1 per Ante
 	Unlock: Finish a run with 8+ Jokers
+Headstart deck
+	$25 jumbo buffon pack, start ante 2
+	Unlock: Skip 8 by Ante 8
 ## Jokers
 Red Joker
 	Gain 2 mult per remaining card in hand
@@ -16,16 +19,13 @@ One Mans Trash
 Noble Joker
 	Gain 1 mult per 2 face cards in full deck
 	Unlock: Have 24 face cards in your deck
-
-# Doing
-Evening
-	retriggers even cards
-	some additional condition or cost? this is strong
+Prime Time
+	Prime cards give their rank as mult
+	Unlock: Play a hand of 5 7's
 Perkeo2?
-	make negative copy of a joker when defeat boss
-primetime
-	some bonus to prime cards
-leaper
+	Make a negative copy of a random joker when entering boss
+	Unlock: None/Legendary
+Leaper
 	+1 mult. this doubles per straight flush played
 
 # TODO
@@ -44,11 +44,38 @@ Reactive
 	blind scores equal highest round score achieved this round. have to keep upping the ante
 Manager/Employer
 	0 joker slots, all jokers are negative and rental
+Flat Earth
+	no planet cards
+	some bonus/buff
+some ancient astronomer reference
+	all planet cards are secret at start
+	they only add to pool once played
+Royal/Noble
+	only the face cards. opposite to abandoned
+Whole in One
+	if hand doesnt beat blind, reset total score to zero
+	its not quite like needle, you get your multiple hands, but you keep trying until one beats it. they do not accumulate
+	whats the buff?
 ## Cards
 Joker/Jester/Jimbo
 	wild in suit and rank
 	> play a hand of all wild cards
 ## Jokers
+astronomer
+	Gains X2 when you discover a poker hand
+Wild Child
+	+X? per wild card in your deck/hand
+Vermin - by Jaspal
+	legendary riff raff that generates negative commons
+qyasar
+	planet cards now apply hands that *contain* target
+	maybe then resultant is decreased or some other debuff?
+	possibly voucher or deck instead
+	no jokers?
+rainbow
+	1X per unique suit in scored hand (including wilds)
+	so AS,AC,AD,AH,Awild = X5
+	ontop of five of a kind
 redistributers
 	halve chips & double mult in jokerMain
 	vice versa
@@ -105,8 +132,14 @@ stonks?
 	each ? gain #mult chips
 Dawn
 	some counterpart to dusk
-population bonus?
-	+1 mult per face card in full deck
+4-leaf clover
+	cards scored in 4 of a kind become lucky
+	also make into clubs?
+Plasma/Sun Joker. maybe Ra(sun god)?
+	the plasma deck effect. legendary
+sirius/northstar/other astro theme / otherwordly
+	add the best hand score from held hand.
+	eg you play a straight but have a pair in hand, so after straight base is added but before rest of scoring, you gain the bonus for pair since you have that in hand
 ## Consumables
 Execution Tag/Pack
 	gives combination of death and hangman tarots
@@ -142,6 +175,9 @@ Deck Purge > Shuffle Voucher
 Fragile Shipping > Duplicate Shipping Voucher
 	Turns every card in your deck into Glass
 	Duplicates every card in your deck
+?fuck go back
+	return to ante 1
+	lose 1 joker slot
 ## Enhancements/Editions/Seals
 Coal
 	works like stone
@@ -152,15 +188,39 @@ Diamond
 Plague/Virus
 	contagious in hand/scored. gives some buff but then destroys? or purely debuff and a challenge?
 	maybe X2 then breaks, spreading to other cards that scored. so playing them alone is the way to remove them
-?name
+classless?
 	wild rank rather than suit
 Phoenix
 	when would be destroyed/removed, is instead discarded or added to next shop, also maybe buffed
+fragile and dangerous?
+	big bonus like glass, X3?
+	1 in ? chance to destroy entire scored hand
+gunpowder
+	+/X?
+	when BURN; 1 in ? to destroy all scored
+name?
+	gives mult of its rank instead of chips
 ## Misc
 Joker fusion, some method of combining related jokers into new ones, perhaps if have each of a set unlock the fusion in shop or straight add it to next shop
+	shortcut & 4 fingers?
 Limitless Endless mode; once you reach endless, limits are removed. joker slots/money gain/etc. a reward for winning. either setting that alters endless, or another option on win screen
 Equinox & Solstice does what?
 Vampire Blind
 	removes enhancements on scored cards, maybe even increases blind to beat when doing so?
-some method to save hands for latter. specifically those pulled in shop from packs. sometimes a good hand shows up in a pack time and not when wanting to score.
+some method to save hands for later. specifically those pulled in shop from packs. sometimes a good hand shows up in a pack time and not when wanting to score.
 	perhaps a joker/voucher that a saves a hand if the pack is skipped?
+lock in boss blind
+	must play most played hand
+	doesnt soun that bad, but will screw ver sometimes
+Vicious Mockery blind
+	lose $1 per joker or joker trigger
+freeze/lock items in shop, that you cant buy yet
+shredder, pay to delete cards from deck
+better rerolls, rerolls voucher and packs too
+voucher packs?
+asteroids/comets/moons
+	like planet cards but 'contains' and for specific hand patterns. adds onto base hand score before card score phase
+	one of jupiters moons could be lesser flush, eg at least 4 cards of same suit
+
+more meta upgrades, not just unlock jokers/decks, but also consumables and types, and shop features etc (like freeze instead of being voucher or option)
+	basically start with only normal cards and jokers, gotta unlock tarots/spectrals/planets, special features,etc
