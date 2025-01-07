@@ -278,3 +278,9 @@ SMODS.Joker {
 	end
 	-- no unlock since legendary
 }
+
+-- Green Joker
+SMODS.Joker:take_ownership('j_green_joker', {
+	config = { extra = { hand_add = 2, discard_sub = 2 } }
+})
+-- loc_vars = {self.ability.extra.hand_add, self.ability.extra.discard_sub, self.ability.mult}

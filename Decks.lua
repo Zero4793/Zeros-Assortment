@@ -8,7 +8,7 @@
 ----------------------------------------------
 ------------MOD CODE -------------------------
 
--- start with 1 joker slot, gain 1 per ante
+-- Antimatter: start with 1 joker slot, gain 1 per ante
 SMODS.Back{
 	key = "antimatterDeck",
 	pos = {x = 1, y = 0},
@@ -40,11 +40,10 @@ SMODS.Back{
 	end
 }
 
--- $25, jumbo buffoon pack, start ante 2
+-- Headstart: $25, jumbo buffoon pack, start ante 2
 SMODS.Back{
 	key = "Headstart",
 	pos = {x = 2, y = 0},
-	config = { dollars = 21	},
 	loc_txt = {
 		name = "Headstart",
 		text = {
@@ -56,6 +55,7 @@ SMODS.Back{
 			"Skip {C:attention}6 Blinds{} by {C:attention}Ante 4"
 		}
 	},
+	config = { dollars = 21	},
 	apply = function()
 		-- ante = 2
 		ease_ante(1)
@@ -75,21 +75,46 @@ SMODS.Back{
 		if args.type == "ante_up" and args.ante == 4 and G.GAME.skips >= 6 then
 			unlock_card(self)
 		end
-		-- if args.type == "ante_up" then
-		-- 	print(args.ante)
-		-- 	print(G.GAME.skips)
-		-- 	-- print(args.skips_total)
-		-- end
-		-- if args.type == "blind_skipped" then
-		-- 	-- print(args.ante)
-		-- 	print(G.GAME.skips)
-		-- 	print(args.skips_total)
-		-- end
 	end
 }
---G.GAME.skips = local/run
---args.skips_total = global/profile
 
-
-----------------------------------------------
-------------MOD CODE END----------------------
+-- Emplyer: 0 joker slots, $20, all jokers are negative and rental
+-- SMODS.Back{
+-- 	key = "Employer",
+-- 	pos = {x = 3, y = 0},
+-- 	loc_txt = {
+-- 		name = "Employer",
+-- 		text = {
+-- 			"Start with 0 {C:attention}Joker slots",
+-- 			"All {C:attention}Jokers{} are",
+-- 			"{C:dark_edition}Negative{} and {C:attention}Rental"
+-- 		}
+-- 	},
+-- 	config = { dollars = 20 },
+-- 	apply = function()
+-- 		G.GAME.starting_params.joker_slots = 0
+-- 	end,
+-- 	trigger_effect = function(self, args) -- can maybe do self,context? says john smods
+-- 		print(args)
+-- 		-- all jokers are negative and rental
+-- 		-- on joker creation (be that shop or pack or other):
+-- 		-- apply negative and rental
+-- 	end,
+-- 	unlocked = false,
+-- 	discovered = false
+-- }
+-- if context.type == 'store_joker_modify' then
+-- 	_context.card.temp_edition = true
+-- 	self:yep('+', G.C.DARK_EDITION,function() 
+-- 		_context.card.temp_edition = nil
+-- 		_context.card:set_edition({negative = true}, true)
+-- 		_context.card.ability.couponed = true
+-- 		_context.card:set_cost()
+-- 		G.CONTROLLER.locks[lock] = nil
+-- 		return true
+-- 	end)
+-- 	_applied = true
+	
+	----------------------------------------------
+	------------MOD CODE END----------------------
+	
