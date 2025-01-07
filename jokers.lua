@@ -283,4 +283,36 @@ SMODS.Joker {
 SMODS.Joker:take_ownership('j_green_joker', {
 	config = { extra = { hand_add = 2, discard_sub = 2 } }
 })
--- loc_vars = {self.ability.extra.hand_add, self.ability.extra.discard_sub, self.ability.mult}
+
+-- Wild Child
+SMODS.Joker {
+	key = 'wildChild',
+	atlas = 'ModdedVanilla',
+	pos = { x = 5, y = 0 },
+	loc_txt = {
+		name = 'Wild Child',
+		text = {
+			"{X:mult,C:white}X1{} + {X:mult,C:white}X1{} per {C:blue}wild card",
+			"in scored hand"
+		}
+		-- unlock = {
+		-- 	"Play a hand of {C:blue}5{} {C:attention}wild cards{}"
+		-- }
+	},
+	rarity = 2,
+	cost = 6,
+	calculate = function(self, card, context)
+		if context.joker_main then
+			local wild_count = 1
+			for _, card in pairs(context.scoring_hand) do
+				if card.label == 'Wild Card' then
+					wild_count = wild_count + 1
+				end
+			end
+			return {
+				message = localize { type = 'variable', key = 'a_xmult', vars = { wild_count } },
+				Xmult_mod = wild_count
+			}
+		end
+	end
+} -- add unlock

@@ -30,6 +30,9 @@ Leaper
 	Unlock: ?
 ~Green Joker
 	Gain 2 mult per play, lose 2 mult per discard
+Wild Child
+	X1 + X1 per wild card in played hand
+	Unlock: ?
 
 # In Progress
 Employer [Deck]
@@ -74,8 +77,6 @@ Joker/Jester/Jimbo
 ## Jokers
 astronomer
 	Gains X2 when you discover a poker hand
-Wild Child
-	+X? per wild card in your deck/hand
 Vermin - by Jaspal
 	legendary riff raff that generates negative commons
 qyasar
@@ -222,6 +223,7 @@ freeze/lock items in shop, that you cant buy yet
 shredder, pay to delete cards from deck
 better rerolls, rerolls voucher and packs too
 voucher packs?
+Jokers with gold sticker have a chance to spawn with red seal
 
 Moons
 	bonuses for sub-hand-types that add onto base.
