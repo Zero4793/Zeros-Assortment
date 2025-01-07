@@ -79,42 +79,31 @@ SMODS.Back{
 }
 
 -- Emplyer: 0 joker slots, $20, all jokers are negative and rental
--- SMODS.Back{
--- 	key = "Employer",
--- 	pos = {x = 3, y = 0},
--- 	loc_txt = {
--- 		name = "Employer",
--- 		text = {
--- 			"Start with 0 {C:attention}Joker slots",
--- 			"All {C:attention}Jokers{} are",
--- 			"{C:dark_edition}Negative{} and {C:attention}Rental"
--- 		}
--- 	},
--- 	config = { dollars = 20 },
--- 	apply = function()
--- 		G.GAME.starting_params.joker_slots = 0
--- 	end,
--- 	trigger_effect = function(self, args) -- can maybe do self,context? says john smods
--- 		print(args)
--- 		-- all jokers are negative and rental
--- 		-- on joker creation (be that shop or pack or other):
--- 		-- apply negative and rental
--- 	end,
--- 	unlocked = false,
--- 	discovered = false
--- }
--- if context.type == 'store_joker_modify' then
--- 	_context.card.temp_edition = true
--- 	self:yep('+', G.C.DARK_EDITION,function() 
--- 		_context.card.temp_edition = nil
--- 		_context.card:set_edition({negative = true}, true)
--- 		_context.card.ability.couponed = true
--- 		_context.card:set_cost()
--- 		G.CONTROLLER.locks[lock] = nil
--- 		return true
--- 	end)
--- 	_applied = true
-	
-	----------------------------------------------
-	------------MOD CODE END----------------------
-	
+SMODS.Back{
+	key = "Employer",
+	pos = {x = 3, y = 0},
+	loc_txt = {
+		name = "Employer",
+		text = {
+			"Start with 0 {C:attention}Joker slots",
+			"All {C:attention}Jokers{} are",
+			"{C:dark_edition}Negative{} and {C:attention}Rental"
+		}
+	},
+	config = { dollars = 20 },
+	apply = function()
+		G.GAME.starting_params.joker_slots = 1
+	end,
+	trigger_effect = function(self, args)
+		-- working with cards from shop but not from packs
+		if args.card and args.card.ability.set=="Joker" then
+			args.card:set_edition({negative = true}, true)
+			args.card:set_rental(true)
+		end
+	end,
+	unlocked = false,
+	discovered = false
+}
+
+----------------------------------------------
+------------MOD CODE END----------------------

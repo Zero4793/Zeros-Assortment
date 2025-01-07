@@ -28,6 +28,16 @@ Perkeno
 Leaper
 	+1 mult. this doubles per straight flush played
 	Unlock: ?
+~Green Joker
+	Gain 2 mult per play, lose 2 mult per discard
+
+# In Progress
+Employer [Deck]
+	start with 1 joker slot (should be 0)
+	cards bought from shop gain negative and rental
+	cards bought from pack do not gain the above (they should)
+	they shouldnt even gain on purches but on creation (dont know how)
+	weird bug, unaffected gain the above when being sold. dont ask me how add_to_deck is true onSell
 
 # TODO
 ## Decks
@@ -116,8 +126,6 @@ Incinerator
 	Gain .25X when you destroy a card
 Chef
 	when you cook; gain $$$
-~Green Joker
-	take ownership of green joker and make its mult gain more
 Demon
 	Gains large bonus eg ?X when you play a hand containing 3 6's
 Rice Bowl
