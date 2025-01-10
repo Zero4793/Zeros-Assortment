@@ -6,6 +6,9 @@ Antimatter
 Headstart deck
 	$25 jumbo buffon pack, start ante 2
 	Unlock: Skip 8 blinds by Ante 8
+Royal
+	Only face cards (12)
+	Unlock: ?
 ## Jokers
 Red Joker
 	Gain 2 mult per remaining card in hand
@@ -17,7 +20,7 @@ One Mans Trash
 	Gain $1 per remaining discard
 	Unlock: Finish a run with no unused discards
 Noble Joker
-	Gain 1 mult per 2 face cards in full deck
+	Gain 1 mult per face card in full deck
 	Unlock: Have 24 face cards in your deck
 Prime Time
 	Prime cards give their rank as mult
@@ -56,16 +59,12 @@ Auto/Build
 	no or limited shop. gain via tags? unable to skip? jokers are eternal and negative? Min viable starting deck?
 Reactive
 	blind scores equal highest round score achieved this round. have to keep upping the ante
-Manager/Employer
-	0 joker slots, all jokers are negative and rental
 Flat Earth
 	no planet cards
 	some bonus/buff
 some ancient astronomer reference
 	all planet cards are secret at start
 	they only add to pool once played
-Royal/Noble
-	only the face cards. opposite to abandoned
 Whole in One
 	if hand doesnt beat blind, reset total score to zero
 	its not quite like needle, you get your multiple hands, but you keep trying until one beats it. they do not accumulate

@@ -118,16 +118,16 @@ SMODS.Joker {
 	loc_txt = {
 		name = 'Noble Joker',
 		text = {
-			"{C:mult}+1{} Mult per 2",
-			"{C:attention}face{} cards in your full deck"
+			"{C:mult}+1{} Mult per",
+			"{C:attention}face{} card in your full deck"
 		},
 		unlock = {
 			"Have {C:attention}24{} or more face cards",
 			"in your full deck"
 		}
 	},
-	rarity = 1,
-	cost = 2,
+	rarity = 2,
+	cost = 6,
 	calculate = function(self, card, context)
 		if context.joker_main then
 			local face_count = 0
@@ -136,7 +136,6 @@ SMODS.Joker {
 					face_count = face_count + 1
 				end
 			end
-			face_count = math.floor(face_count / 2)
 			return {
 				mult_mod = face_count,
 				message = localize { type = 'variable', key = 'a_mult', vars = { face_count } }

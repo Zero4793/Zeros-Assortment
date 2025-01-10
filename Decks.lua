@@ -105,5 +105,36 @@ SMODS.Back{
 	discovered = false
 }
 
+-- Royal: Only face cards
+SMODS.Back{
+	key = "royal",
+	pos = {x = 1, y = 0},
+	loc_txt = {
+		name = "Royal",
+		text ={
+			"Only {C:attention}face{} cards"
+		}
+	},
+	apply = function()
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				local i = 0
+				while i < #G.playing_cards do
+					i = i + 1
+					local v = G.playing_cards[i]
+					if not v:is_face() then
+						v:remove()
+						i = i - 1
+					end
+				end
+			return true
+			end
+		}))
+	end,
+	unlocked = true,
+	discovered = true
+	-- add unlock
+}
+
 ----------------------------------------------
 ------------MOD CODE END----------------------
